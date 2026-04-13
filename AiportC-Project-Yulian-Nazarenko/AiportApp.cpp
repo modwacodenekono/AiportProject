@@ -19,41 +19,50 @@ void AiportApp::run() {
         cout << "7. Advanced options (radius search, nearest airport, high/low elevation, etc.)\n";
         cout << "8. Exit\n";
         cout << "Choice: ";
-        cin >> choice;
-        cin.ignore();
+        /*cin >> choice;
+        cin.ignore();*/
+
+        while (!(cin >> choice)) { // Keep asking until the user enters a valid number
+            cout << "Invalid input. Try again: ";
+            cin.clear(); // Reset input errors
+            cin.ignore(10000, '\n'); // Remove bad input
+        }
 
         switch (choice) {
-            case choice == 1:
+            case 1:
 
                 break;
             
-            case choice == 2:
+            case 2:
                 
                 break;
 
-            case choice == 3:
+            case 3:
                 
                 break;
 
-            case choice == 4:
+            case 4:
                 
                 break;
 
-            case choice == 5:
+            case 5:
                 
                 break;
 
-            case choice == 6:
+            case 6:
                 
                 break;
 
-            case choice == 7:
+            case 7:
                 
                 break;
 
-            case choice == 8:
+            case 8:
                 
                 break;
+
+            default:
+                continue;
             
             
         }
