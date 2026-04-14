@@ -4,8 +4,8 @@
 using namespace std;
 
 void AiportApp::run() {
-	//AiportRepository repo;
-	//repo.loadFromCsv();
+	AiportRepository repo;
+	repo.loadFromCsv();
 	int choice;
 
     do {
@@ -30,7 +30,8 @@ void AiportApp::run() {
 
         switch (choice) {
             case 1:
-
+                cout << "1";
+				repo.printFirst();
                 break;
             
             case 2:

@@ -5,7 +5,7 @@ int main()
 {
     AiportApp app;
     app.run();
-    std::cout << "1";
+    cout << "\n1";
     return 0;
 }
 
