@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Aiport.cpp" />
     <ClCompile Include="AiportApp.cpp" />
     <ClCompile Include="AiportRepository.cpp" />
     <ClCompile Include="main.cpp" />

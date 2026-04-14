@@ -26,12 +26,17 @@ public:
     int getId() const;
     string getType() const;
     string getName() const;
-    string getElevationFt() const;
-    double getContinent() const;
-    string getIsbn() const;
-    string getLanguage() const;
-    int getPgaes() const;
-    int getYear() const;
+    int getElevationFt() const;
+    string getContinent() const;
+    string getIsoCountry() const;
+    string getIsoRegion() const;
+    string getMunicipality() const;
+    string getIcaoCode() const;
+    string getIataCode() const;
+    string getGpsCode() const;
+    string getLocalCode() const;
+    double getCoordinatesX() const;
+    double getCoordinatesY() const;
 
     void print() const;
 };
