@@ -152,3 +152,10 @@ map<string, int> AiportRepository::countAirportsByType() const {
     }
     return aiportTypes;
 }
+
+void AiportRepository::addAirport(const string& id, const string& type, const string& name, int elevation, const string& continent, const string& isoCountry, const string& isoRegion, const string& municipality, const string& icaoCode, const string& iataCode, const string& gpsCode, const string& localCode, double x, double y) {
+    Aiport a;
+    a.set(id, type, name, elevation, continent, isoCountry, isoRegion, municipality, icaoCode, iataCode, gpsCode, localCode, x, y);
+    aiports.push_back(a);
+	a.print();
+}

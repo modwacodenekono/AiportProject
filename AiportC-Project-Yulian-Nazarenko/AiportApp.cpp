@@ -96,7 +96,40 @@ void AiportApp::run() {
                 break;
             }
             case 5: {
-                // TODO: implement add a new airport
+                {
+                    // Interactive input moved here: collect fields and call repo.addAirport
+                    cin.ignore(1000, '\n');
+                    string id, type, name, continent, isoCountry, isoRegion, municipality, icaoCode, iataCode, gpsCode, localCode, temp;
+                    int elevation = 0;
+                    double x = 0.0, y = 0.0;
+
+                    cout << "Enter airport id: ";
+                    getline(cin, id);
+                    cout << "Enter type: ";
+                    getline(cin, type);
+                    cout << "Enter name: ";
+                    getline(cin, name);
+                    cout << "Enter elevation (ft): ";
+                    getline(cin, temp);
+                    if (!temp.empty()) {
+                        try { elevation = stoi(temp); } catch(...) { elevation = 0; }
+                    }
+                    cout << "Enter continent: "; getline(cin, continent);
+                    cout << "Enter ISO country: "; getline(cin, isoCountry);
+                    cout << "Enter ISO region: "; getline(cin, isoRegion);
+                    cout << "Enter municipality: "; getline(cin, municipality);
+                    cout << "Enter ICAO code: "; getline(cin, icaoCode);
+                    cout << "Enter IATA code: "; getline(cin, iataCode);
+                    cout << "Enter GPS code: "; getline(cin, gpsCode);
+                    cout << "Enter local code: "; getline(cin, localCode);
+                    cout << "Enter coordinate X (latitude): "; getline(cin, temp);
+                    if (!temp.empty()) { try { x = stod(temp); } catch(...) { x = 0.0; } }
+                    cout << "Enter coordinate Y (longitude): "; getline(cin, temp);
+                    if (!temp.empty()) { try { y = stod(temp); } catch(...) { y = 0.0; } }
+
+                    repo.addAirport(id, type, name, elevation, continent, isoCountry, isoRegion, municipality, icaoCode, iataCode, gpsCode, localCode, x, y);
+                    cout << "Airport added.\n";
+                }
                 break;
             }
             case 6: {
