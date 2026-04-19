@@ -109,6 +109,7 @@ void AiportRepository::loadFromCsv() {
 			cout << "Error " << e.what() << " parsing line: " << line << "\n";
         } // remove
 	}
+    file.close();
 std::cout << counter << " errors\n";
 }
 
@@ -186,5 +187,6 @@ void AiportRepository::saveToCsv() const {
             << a.getCoordinatesX() << ","
             << a.getCoordinatesY() << "\n";
     }
+    file.close();
     cout << "Saved " << aiports.size() << " airports to airports.csv\n"; //remove
 }
