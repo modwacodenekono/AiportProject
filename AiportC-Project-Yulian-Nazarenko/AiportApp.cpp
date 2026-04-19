@@ -200,9 +200,23 @@ void AiportApp::run() {
                             break;
                         }
                         case 5: {
+                            {
+                                auto list = repo.airportsWithMissingIata();
+                                if (list.empty()) cout << "No airports with missing IATA codes found.\n";
+                                else {
+                                    cout << list.size() << " airports with missing IATA codes:\n";
+                                    for (const auto& ap : list) ap.print();
+                                }
+                            }
                             break;
                         }
                         case 6: {
+                            {
+                                auto groups = repo.groupByMunicipality();
+                                for (const auto& p : groups) {
+                                    cout << "Municipality: " << (p.first.empty() ? "(empty)" : p.first) << " - " << p.second.size() << " airports\n";
+                                }
+                            }
                             break;
                         }
                         case 7: {

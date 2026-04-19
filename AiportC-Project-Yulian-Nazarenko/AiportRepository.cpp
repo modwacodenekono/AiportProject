@@ -276,6 +276,22 @@ const Aiport* AiportRepository::findLowestElevation() const {
         if (a.getElevationFt() < best->getElevationFt()) best = &a;
     }
     return best;
+} // combine
+
+vector<Aiport> AiportRepository::airportsWithMissingIata() const {
+    vector<Aiport> result;
+    for (const auto& a : aiports) {
+        if (a.getIataCode().empty()) result.push_back(a);
+    }
+    return result;
+}
+
+map<string, vector<Aiport>> AiportRepository::groupByMunicipality() const {
+    map<string, vector<Aiport>> groups;
+    for (const auto& a : aiports) {
+        groups[a.getMunicipality()].push_back(a);
+    }
+    return groups;
 }
 
 

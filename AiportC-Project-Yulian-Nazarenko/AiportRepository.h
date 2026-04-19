@@ -35,4 +35,8 @@ public:
     const Aiport* findHighestElevation() const;
     // Return airport with lowest elevation (nullptr if none)
     const Aiport* findLowestElevation() const;
+    // Return airports that have missing/empty IATA codes
+    vector<Aiport> airportsWithMissingIata() const;
+    // Group airports by municipality
+    map<string, vector<Aiport>> groupByMunicipality() const;
 };
