@@ -41,14 +41,28 @@ void AiportApp::run() {
                     cout << "Nothing found for: " << text << ". Please check your input." << endl;
                 }
                 else {
-                    for (auto& b : results) {
-                        b.print();
+                    for (auto& a : results) {
+                        a.print();
                     }
                 }
                 break;
             }
             case 2: {
-                // TODO: implement search by name
+                string text;
+                cout << "Title search: ";
+                cin.ignore(1000, '\n');
+                getline(cin, text);
+                auto results = repo.searchByName(text);
+
+                if (results.empty()) {
+                    cout << "\n-----------------------------\n";
+                    cout << "Nothing found for: " << text << ". Please check your input." << endl;
+                }
+                else {
+                    for (auto& a : results) {
+                        a.print();
+                    }
+                }
                 break;
             }
             case 3: {

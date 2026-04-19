@@ -122,3 +122,14 @@ vector<Aiport> AiportRepository::searchByIsoCountry(const string& text) const {
     }
     return result;
 }
+
+
+vector<Aiport> AiportRepository::searchByName(const string& text) const {
+    vector<Aiport> result;
+    for (const Aiport& a : aiports) {
+        if (a.getName().find(text) != string::npos){
+            result.push_back(a);
+        }
+    }
+    return result;
+}
