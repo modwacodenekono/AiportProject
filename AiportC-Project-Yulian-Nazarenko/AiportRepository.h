@@ -29,4 +29,6 @@ public:
     double distanceBetweenAirports(const string& a1, const string& a2) const;
     // Find nearest airport to given id. Returns pair {pointer, distance_km} or {nullptr, -1.0}
     std::pair<const Aiport*, double> findNearestAirport(const string& id) const;
+    // Return all airports within radiusKm kilometers of airport identified by id
+    vector<Aiport> airportsWithinRadius(const string& id, double radiusKm) const;
 };

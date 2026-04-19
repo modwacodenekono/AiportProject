@@ -181,12 +181,15 @@ void AiportApp::run() {
                             break;
                         }
                         case 3: {
-                            cout << "Enter latitude: ";
-                            double lat;
-                            cin >> lat;
-                            cout << "Enter longitude: ";
-                            double lon; cin >> lon;
-                            cin.ignore(1000, '\n');
+                            cout << "Enter airport ID to use as center: ";
+                            string id; getline(cin, id);
+                            cout << "Enter radius (km): "; double r; cin >> r; cin.ignore(1000, '\n');
+                            auto list = repo.airportsWithinRadius(id, r);
+                            if (list.empty()) cout << "No airports found within " << r << " km (or center not found).\n";
+                            else {
+                                cout << list.size() << " airports found within " << r << " km:\n";
+                                for (const auto& ap : list) ap.print();
+                            }
                             break;
                         }
                         case 4: {

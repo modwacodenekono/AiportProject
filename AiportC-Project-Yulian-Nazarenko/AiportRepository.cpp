@@ -248,3 +248,15 @@ std::pair<const Aiport*, double> AiportRepository::findNearestAirport(const stri
     return {best, bestDist};
 }
 
+vector<Aiport> AiportRepository::airportsWithinRadius(const string& id, double radiusKm) const {
+    vector<Aiport> result;
+    const Aiport* center = findAirportById(id);
+    if (!center) return result;
+    for (const auto& a : aiports) {
+        if (a.getId() == id) continue;
+        double d = haversine(center->getCoordinatesX(), center->getCoordinatesY(), a.getCoordinatesX(), a.getCoordinatesY());
+        if (d <= radiusKm) result.push_back(a);
+    }
+    return result;
+}
+
