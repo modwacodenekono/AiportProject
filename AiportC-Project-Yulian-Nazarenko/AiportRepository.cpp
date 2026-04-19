@@ -144,3 +144,11 @@ vector<Aiport> AiportRepository::searchByIataCode(const string& text) const {
     }
     return result;
 }
+
+map<string, int> AiportRepository::countAirportsByType() const {
+    map<string, int> aiportTypes;
+    for (const Aiport& a : aiports) {
+        ++aiportTypes[a.getType()];
+    }
+    return aiportTypes;
+}

@@ -31,7 +31,7 @@ void AiportApp::run() {
         switch (choice) {
             case 1: {
                 string text;
-                cout << "Title search: ";
+                cout << "Country search: ";
                 cin.ignore(1000, '\n');
                 getline(cin, text);
                 auto results = repo.searchByIsoCountry(text);
@@ -49,7 +49,7 @@ void AiportApp::run() {
             }
             case 2: {
                 string text;
-                cout << "Title search: ";
+                cout << "Name search: ";
                 cin.ignore(1000, '\n');
                 getline(cin, text);
                 auto results = repo.searchByName(text);
@@ -67,7 +67,7 @@ void AiportApp::run() {
             }
             case 3: {
                 string text;
-                cout << "Title search: ";
+                cout << "IATA code search: ";
                 cin.ignore(1000, '\n');
                 getline(cin, text);
                 auto results = repo.searchByIataCode(text);
@@ -84,7 +84,15 @@ void AiportApp::run() {
                 break;
             }
             case 4: {
-                // TODO: implement count airports by type
+                auto counts = repo.countAirportsByType();
+                if (counts.empty()) {
+                    cout << "No airports loaded.\n";
+                } else {
+                    cout << "Airport counts by type:\n";
+                    for (const auto& p : counts) {
+                        cout << p.first << " -> " << p.second << "\n";
+                    }
+                }
                 break;
             }
             case 5: {
