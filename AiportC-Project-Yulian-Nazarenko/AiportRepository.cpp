@@ -2,7 +2,26 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <cmath>
 #include <iostream>
+
+
+//Maths
+
+static double deg2rad(double deg) { return deg * (3.14159265358979323846 / 180.0); }
+
+// Haversine formula
+static double haversine(double lat1, double lon1, double lat2, double lon2) {
+    const double R = 6371.0; // km
+    double dlat = deg2rad(lat2 - lat1);
+    double dlon = deg2rad(lon2 - lon1);
+    double a = sin(dlat / 2) * sin(dlat / 2) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * sin(dlon / 2) * sin(dlon / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return R * c;
+}
+
+
+
 
 Aiport::Aiport(){}
 
@@ -23,6 +42,7 @@ void Aiport::set(string id, string t, string n, int el, string c, string isoC, s
     coordinatesX = X;
 	coordinatesY = Y;
 }
+
 
 string Aiport::getId() const { return aiportId; }
 string Aiport::getType() const { return type; }
@@ -114,6 +134,16 @@ std::cout << counter << " errors\n";
 }
 
 
+
+// Find airport by id
+const Aiport* AiportRepository::findAirportById(const string& key) {
+    for (const Aiport& a : aiports) {
+        if (a.getId() == key) return &a;
+    }
+    return nullptr;
+}
+
+
 vector<Aiport> AiportRepository::searchByIsoCountry(const string& text) const {
     vector<Aiport> result;
     for (const Aiport& a : aiports) {
@@ -190,3 +220,15 @@ void AiportRepository::saveToCsv() const {
     file.close();
     cout << "Saved " << aiports.size() << " airports to airports.csv\n"; //remove
 }
+
+
+
+//advanced features
+
+double AiportRepository::distanceBetweenAirports(const string& a1, const string& a2) const {
+    const Aiport* A = findAirportById(a1);
+    const Aiport* B = findAirportById(a2);
+    if (!A || !B) return -1.0;
+    return haversine(A->getCoordinatesX(), A->getCoordinatesY(), B->getCoordinatesX(), B->getCoordinatesY());
+}
+

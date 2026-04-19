@@ -20,4 +20,10 @@ public:
     map<string, int> countAirportsByType() const;
     void addAirport(const string& id, const string& type, const string& name, int elevation, const string& continent, const string& isoCountry, const string& isoRegion, const string& municipality, const string& icaoCode, const string& iataCode, const string& gpsCode, const string& localCode, double x, double y);
     void saveToCsv() const;
+
+    const Aiport* findAirportById(const string& key);
+
+    // Calculate great-circle distance (km) between two airports identified by id or IATA code
+    // Returns negative value if one of the airports is not found
+    double distanceBetweenAirports(const string& a1, const string& a2) const;
 };

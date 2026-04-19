@@ -158,7 +158,14 @@ void AiportApp::run() {
                             string a1; getline(cin, a1);
                             cout << "Enter ID of second airport: ";
                             string a2; getline(cin, a2);
-                            // TODO: implement distance calculation
+                            double d = repo.distanceBetweenAirports(a1, a2);
+                            if (d < 0) {
+                                cout << "One or both airports not found.\n";
+                            } else {
+                                cout.setf(std::ios::fixed); cout.precision(3);
+                                cout << "Distance between '" << a1 << "' and '" << a2 << "' = " << d << " km\n";
+                                cout.unsetf(std::ios::fixed);
+                            }
                             break;
                         }
                         case 2: {
@@ -176,7 +183,6 @@ void AiportApp::run() {
                             cout << "Enter longitude: ";
                             double lon; cin >> lon;
                             cin.ignore(1000, '\n');
-                            double r;
                             break;
                         }
                         case 4: {
