@@ -122,7 +122,7 @@ vector<Aiport> AiportRepository::searchByIsoCountry(const string& text) const {
         }
     }
     return result;
-}
+} // simplify these 3 search functions by using a lambda and a common search function?
 
 
 vector<Aiport> AiportRepository::searchByName(const string& text) const {

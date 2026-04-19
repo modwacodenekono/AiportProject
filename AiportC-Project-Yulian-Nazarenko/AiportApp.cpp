@@ -137,14 +137,78 @@ void AiportApp::run() {
                 break;
             }
             case 7: {
-                // TODO: implement advanced options
+                {
+                    int sub;
+                    do {
+                        cout << "\n--- Advanced options ---\n";
+                        cout << "1. Calculate distance between airports\n";
+                        cout << "2. Find nearest airport to a given location\n";
+                        cout << "3. List all airports within a radius\n";
+                        cout << "4. Highest and lowest elevation airports\n";
+                        cout << "5. Airports with missing IATA codes\n";
+                        cout << "6. Group airports by municipality\n";
+                        cout << "7. Sorting\n";
+                        cout << "8. Back\n";
+                        cout << "Choice: ";
+                        while (!(cin >> sub)) { cout << "Invalid input. Try again: "; cin.clear(); cin.ignore(10000,'\n'); }
+                        cin.ignore(1000, '\n');
+                        switch (sub) {
+                        case 1: {
+                            cout << "Enter ID of first airport: ";
+                            string a1; getline(cin, a1);
+                            cout << "Enter ID of second airport: ";
+                            string a2; getline(cin, a2);
+                            // TODO: implement distance calculation
+                            break;
+                        }
+                        case 2: {
+                            cout << "Enter latitude: ";
+                            double lat; cin >> lat;
+                            cout << "Enter longitude: ";
+                            double lon; cin >> lon;
+                            cin.ignore(1000, '\n');
+                            break;
+                        }
+                        case 3: {
+                            cout << "Enter latitude: ";
+                            double lat;
+                            cin >> lat;
+                            cout << "Enter longitude: ";
+                            double lon; cin >> lon;
+                            cin.ignore(1000, '\n');
+                            double r;
+                            break;
+                        }
+                        case 4: {
+                            break;
+                        }
+                        case 5: {
+                            break;
+                        }
+                        case 6: {
+                            break;
+                        }
+                        case 7: {
+                            break;
+                        }
+                        case 8: {
+                            break;
+                        }
+                        default: {
+                            cout << "Invalid input. Try again: ";
+                            continue;
+                        }
+                        }
+                    } while (sub != 8);
+                }
                 break;
             }
             case 8: {
-                // Exit
-                break;
+				cout << "Thank you for using Nottingham SkyRoute Explorer. Goodbye!\n";
+                return;
             }
             default: {
+                cout << "Invalid input. Try again: ";
                 continue;
             }
         }
