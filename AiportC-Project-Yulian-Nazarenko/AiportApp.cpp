@@ -220,6 +220,18 @@ void AiportApp::run() {
                             break;
                         }
                         case 7: {
+                            {
+                                cout << "Sort by:\n";
+                                cout << "1. Name\n2. Country\n3. Type\n4. Latitude/Longitude\n5. Elevation\n";
+                                cout << "Choose sort field (1-5): ";
+                                int field; while (!(cin >> field)) { cout << "Invalid. Try again: "; cin.clear(); cin.ignore(1000,'\n'); }
+                                cout << "Ascending? (1=yes, 0=no): ";
+                                int asc; while (!(cin >> asc)) { cout << "Invalid. Try again: "; cin.clear(); cin.ignore(1000,'\n'); }
+                                cin.ignore(1000,'\n');
+                                bool ascending = asc != 0;
+                                auto sorted = repo.sortAirports(field, ascending);
+                                for (const auto& ap : sorted) ap.print();
+                            }
                             break;
                         }
                         case 8: {

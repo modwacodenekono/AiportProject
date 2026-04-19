@@ -39,4 +39,7 @@ public:
     vector<Aiport> airportsWithMissingIata() const;
     // Group airports by municipality
     map<string, vector<Aiport>> groupByMunicipality() const;
+    // Sort airports by a given mode. mode: 1=name, 2=country, 3=type, 4=latitude/longitude, 5=elevation
+    // ascending: true for ascending, false for descending
+    vector<Aiport> sortAirports(int mode, bool ascending = true) const;
 };
