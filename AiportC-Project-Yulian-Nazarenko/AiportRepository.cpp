@@ -260,3 +260,22 @@ vector<Aiport> AiportRepository::airportsWithinRadius(const string& id, double r
     return result;
 }
 
+const Aiport* AiportRepository::findHighestElevation() const {
+    if (aiports.empty()) return nullptr;
+    const Aiport* best = &aiports.front();
+    for (const auto& a : aiports) {
+        if (a.getElevationFt() > best->getElevationFt()) best = &a;
+    }
+    return best;
+}
+
+const Aiport* AiportRepository::findLowestElevation() const {
+    if (aiports.empty()) return nullptr;
+    const Aiport* best = &aiports.front();
+    for (const auto& a : aiports) {
+        if (a.getElevationFt() < best->getElevationFt()) best = &a;
+    }
+    return best;
+}
+
+

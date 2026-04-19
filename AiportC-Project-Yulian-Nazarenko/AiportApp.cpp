@@ -193,6 +193,10 @@ void AiportApp::run() {
                             break;
                         }
                         case 4: {
+                            const Aiport* high = repo.findHighestElevation();
+                            const Aiport* low = repo.findLowestElevation();
+                            cout << "Highest elevation airport:\n"; if (high) high->print();
+                            cout << "Lowest elevation airport:\n"; if (low) low->print();
                             break;
                         }
                         case 5: {

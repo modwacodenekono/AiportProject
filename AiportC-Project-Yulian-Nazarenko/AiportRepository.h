@@ -31,4 +31,8 @@ public:
     std::pair<const Aiport*, double> findNearestAirport(const string& id) const;
     // Return all airports within radiusKm kilometers of airport identified by id
     vector<Aiport> airportsWithinRadius(const string& id, double radiusKm) const;
+    // Return airport with highest elevation (nullptr if none)
+    const Aiport* findHighestElevation() const;
+    // Return airport with lowest elevation (nullptr if none)
+    const Aiport* findLowestElevation() const;
 };
