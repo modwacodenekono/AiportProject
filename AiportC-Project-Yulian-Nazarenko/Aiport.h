@@ -4,7 +4,7 @@ using namespace std;
 
 class Aiport {
 private:
-    int aiportId;
+    string aiportId;
     string type;
     string name;
     int elevationFt;
@@ -16,14 +16,15 @@ private:
     string iataCode;
     string gpsCode;
     string localCode;
-    double coordinatesX;
-    double coordinatesY; // good names?
+    double coordinatesX; // single coordinate field (stored as string)
+    double coordinatesY; // single coordinate field (stored as string)
 
 public:
-    Aiport();
-    void set(int aiportId, string type, string name, int elevationFt, string continent, string isoCountry, string isoRegion, string municipality, string icaoCode, string iataCode, string gpsCode, string localCode, double coordinatesX, double coordinatesY);
+	Aiport();
 
-    int getId() const;
+    void set(string id, string t, string n, int el, string c, string isoC, string isoR, string m, string icao, string iata, string gps, string local, double X, double Y);
+
+    string getId() const;
     string getType() const;
     string getName() const;
     int getElevationFt() const;
@@ -37,6 +38,4 @@ public:
     string getLocalCode() const;
     double getCoordinatesX() const;
     double getCoordinatesY() const;
-
-    void print() const;
 };

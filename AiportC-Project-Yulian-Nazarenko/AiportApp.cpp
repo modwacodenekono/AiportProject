@@ -30,7 +30,7 @@ void AiportApp::run() {
 
         switch (choice) {
             case 1:
-                cout << "1";
+                //cout << "1";
 				repo.printFirst();
                 break;
             
