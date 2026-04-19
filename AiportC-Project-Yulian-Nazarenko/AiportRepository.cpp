@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-//Maths
+//----------Maths----------
 
 static double deg2rad(double deg) { return deg * (3.14159265358979323846 / 180.0); }
 
@@ -136,7 +136,7 @@ std::cout << counter << " errors\n";
 
 
 // Find airport by id
-const Aiport* AiportRepository::findAirportById(const string& key) {
+const Aiport* AiportRepository::findAirportById(const string& key) const {
     for (const Aiport& a : aiports) {
         if (a.getId() == key) return &a;
     }

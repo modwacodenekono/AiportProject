@@ -162,9 +162,7 @@ void AiportApp::run() {
                             if (d < 0) {
                                 cout << "One or both airports not found.\n";
                             } else {
-                                cout.setf(std::ios::fixed); cout.precision(3);
                                 cout << "Distance between '" << a1 << "' and '" << a2 << "' = " << d << " km\n";
-                                cout.unsetf(std::ios::fixed);
                             }
                             break;
                         }
