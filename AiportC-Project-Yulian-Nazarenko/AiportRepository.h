@@ -13,5 +13,6 @@ private:
 
 public:
     void loadFromCsv();
-    void printFirst();
+
+    vector<Aiport> searchByIsoCountry(const string& text) const;
 };

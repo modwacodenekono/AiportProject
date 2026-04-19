@@ -38,4 +38,6 @@ public:
     string getLocalCode() const;
     double getCoordinatesX() const;
     double getCoordinatesY() const;
+
+    void print() const;
 };

@@ -39,7 +39,21 @@ string Aiport::getLocalCode() const { return localCode; }
 double Aiport::getCoordinatesX() const { return coordinatesX; }
 double Aiport::getCoordinatesY() const { return coordinatesY; }
 
-int counter = 0;
+int counter = 0; // debug: count CSV parse errors
+
+void Aiport::print() const {
+    cout << "-----------------------------\n";
+    cout << "Airport ID: " << aiportId << "\n";
+    cout << "Type: " << type << "\n";
+    cout << "Name: " << name << "\n";
+    cout << "Elevation (ft): " << elevationFt << "\n";
+    cout << "Continent: " << continent << "\n";
+    cout << "Country (ISO): " << isoCountry << "\n";
+    cout << "Region: " << isoRegion << "\n";
+    cout << "Municipality: " << municipality << "\n";
+    cout << "ICAO: " << icaoCode << "  IATA: " << iataCode << "  GPS: " << gpsCode << "  Local: " << localCode << "\n";
+    cout << "Coordinates: " << coordinatesX << " , " << coordinatesY << "\n";
+}
 
 void AiportRepository::loadFromCsv() {
     ifstream file("airports.csv");
@@ -93,17 +107,18 @@ void AiportRepository::loadFromCsv() {
         catch (const exception& e) {
             counter++;
 			cout << "Error " << e.what() << " parsing line: " << line << "\n";
-        }
+        } // remove
 	}
 std::cout << counter << " errors\n";
 }
 
-void AiportRepository::printFirst() {
-	int choice;
-    cout << "which one\n";
-	cin >> choice;
-    if (!aiports.empty()) {
-        //cout << "1";
-        cout << "Airport " << aiports.at(choice).getId() << " name " << aiports.at(choice).getName() << " iata " << aiports.at(choice).getCoordinatesX() << " : " << aiports.at(choice).getCoordinatesY() << "\n";
+
+vector<Aiport> AiportRepository::searchByIsoCountry(const string& text) const {
+    vector<Aiport> result;
+    for (const Aiport& a : aiports) {
+        if (a.getIsoCountry().find(text) != string::npos){
+            result.push_back(a);
+        }
     }
+    return result;
 }

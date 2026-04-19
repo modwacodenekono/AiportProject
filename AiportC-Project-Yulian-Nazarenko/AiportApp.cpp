@@ -29,43 +29,55 @@ void AiportApp::run() {
         }
 
         switch (choice) {
-            case 1:
-                //cout << "1";
-				repo.printFirst();
-                break;
-            
-            case 2:
+            case 1: {
+                string text;
+                cout << "Title search: ";
+                cin.ignore(1000, '\n');
+                getline(cin, text);
+                auto results = repo.searchByIsoCountry(text);
                 
+                if (results.empty()) {
+                    cout << "\n-----------------------------\n";
+                    cout << "Nothing found for: " << text << ". Please check your input." << endl;
+                }
+                else {
+                    for (auto& b : results) {
+                        b.print();
+                    }
+                }
                 break;
-
-            case 3:
-                
+            }
+            case 2: {
+                // TODO: implement search by name
                 break;
-
-            case 4:
-                
+            }
+            case 3: {
+                // TODO: implement search by IATA code
                 break;
-
-            case 5:
-                
+            }
+            case 4: {
+                // TODO: implement count airports by type
                 break;
-
-            case 6:
-                
+            }
+            case 5: {
+                // TODO: implement add a new airport
                 break;
-
-            case 7:
-                
+            }
+            case 6: {
+                // TODO: implement save changes
                 break;
-
-            case 8:
-                
+            }
+            case 7: {
+                // TODO: implement advanced options
                 break;
-
-            default:
+            }
+            case 8: {
+                // Exit
+                break;
+            }
+            default: {
                 continue;
-            
-            
+            }
         }
     } while (choice != 8);
 }
