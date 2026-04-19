@@ -97,7 +97,6 @@ void AiportApp::run() {
             }
             case 5: {
                 {
-                    // Interactive input moved here: collect fields and call repo.addAirport
                     cin.ignore(1000, '\n');
                     string id, type, name, continent, isoCountry, isoRegion, municipality, icaoCode, iataCode, gpsCode, localCode, temp;
                     int elevation = 0;
@@ -133,7 +132,8 @@ void AiportApp::run() {
                 break;
             }
             case 6: {
-                // TODO: implement save changes
+				repo.saveToCsv();
+				cout << "Changes saved to aiports.csv\n";
                 break;
             }
             case 7: {

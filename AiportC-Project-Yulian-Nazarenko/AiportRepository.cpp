@@ -159,3 +159,32 @@ void AiportRepository::addAirport(const string& id, const string& type, const st
     aiports.push_back(a);
 	a.print();
 }
+
+
+void AiportRepository::saveToCsv() const {
+    ofstream file("airports.csv");
+    if (!file.is_open()) {
+        cout << "Error: unable to open airports.csv for writing.\n";
+        return;
+    }
+
+    file << "ident,type,name,elevation_ft,continent,iso_country,iso_region,municipality,icao_code,iata_code,gps_code,local_code,coordinatesX,coordinatesY\n";
+
+    for (const Aiport& a : aiports) {
+        file << a.getId() << ","
+            << a.getType() << ","
+            << a.getName() << ","
+            << a.getElevationFt() << ","
+            << a.getContinent() << ","
+            << a.getIsoCountry() << ","
+            << a.getIsoRegion() << ","
+            << a.getMunicipality() << ","
+            << a.getIcaoCode() << ","
+            << a.getIataCode() << ","
+            << a.getGpsCode() << ","
+            << a.getLocalCode() << ","
+            << a.getCoordinatesX() << ","
+            << a.getCoordinatesY() << "\n";
+    }
+    cout << "Saved " << aiports.size() << " airports to airports.csv\n"; //remove
+}
