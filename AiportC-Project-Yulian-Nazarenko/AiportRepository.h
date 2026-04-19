@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <utility>
 
 using namespace std;
 
@@ -26,4 +27,6 @@ public:
     // Calculate great-circle distance (km) between two airports identified by id
     // Returns negative value if one of the airports is not found
     double distanceBetweenAirports(const string& a1, const string& a2) const;
+    // Find nearest airport to given id. Returns pair {pointer, distance_km} or {nullptr, -1.0}
+    std::pair<const Aiport*, double> findNearestAirport(const string& id) const;
 };

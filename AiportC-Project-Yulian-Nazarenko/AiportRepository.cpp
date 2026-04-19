@@ -232,3 +232,19 @@ double AiportRepository::distanceBetweenAirports(const string& a1, const string&
     return haversine(A->getCoordinatesX(), A->getCoordinatesY(), B->getCoordinatesX(), B->getCoordinatesY());
 }
 
+std::pair<const Aiport*, double> AiportRepository::findNearestAirport(const string& id) const {
+    const Aiport* A = findAirportById(id);
+    if (!A) return {nullptr, -1.0};
+    const Aiport* best = nullptr;
+    double bestDist = std::numeric_limits<double>::infinity();
+    for (const auto& a : aiports) {
+		if (a.getId() == id) continue; // skip the same airport
+        double d = haversine(A->getCoordinatesX(), A->getCoordinatesY(), a.getCoordinatesX(), a.getCoordinatesY());
+        if (d < bestDist) {
+            bestDist = d;
+            best = &a;
+        }
+    }
+    return {best, bestDist};
+}
+

@@ -1,5 +1,6 @@
 #include "AiportApp.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -167,11 +168,16 @@ void AiportApp::run() {
                             break;
                         }
                         case 2: {
-                            cout << "Enter latitude: ";
-                            double lat; cin >> lat;
-                            cout << "Enter longitude: ";
-                            double lon; cin >> lon;
+                            cout << "Enter ID of the airport: ";
+                            string a; getline(cin, a);
                             cin.ignore(1000, '\n');
+                            auto res = repo.findNearestAirport(a);
+                            if (!res.first) {
+                                cout << "No airports loaded.\n";
+                            } else {
+                                cout << "Nearest airport is " << res.first->getName() << " in " << res.second << " km\n";
+                                res.first->print();
+                            }
                             break;
                         }
                         case 3: {
