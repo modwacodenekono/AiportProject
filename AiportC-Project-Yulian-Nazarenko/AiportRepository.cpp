@@ -59,7 +59,6 @@ string Aiport::getLocalCode() const { return localCode; }
 double Aiport::getCoordinatesX() const { return coordinatesX; }
 double Aiport::getCoordinatesY() const { return coordinatesY; }
 
-int counter = 0; // debug: count CSV parse errors
 
 void Aiport::print() const {
     cout << "-----------------------------\n";
@@ -121,16 +120,10 @@ void AiportRepository::loadFromCsv() {
             a.set(id, type, name, elevation, continent, isoCountry, isoRegion, municipality, icaoCode, iataCode, gpsCode, localCode, coordinatesX, coordinatesY);
             aiports.push_back(a);
         }
-   //     catch (...) {
-			//cout << "Error parsing line: " << line << "\n";
-   //     }
-        catch (const exception& e) {
-            counter++;
-			cout << "Error " << e.what() << " parsing line: " << line << "\n";
-        } // remove
+        catch (...) {
+        }
 	}
     file.close();
-std::cout << counter << " errors\n";
 }
 
 
@@ -295,5 +288,35 @@ map<string, vector<Aiport>> AiportRepository::groupByMunicipality() const {
 }
 
 
+vector<Aiport> AiportRepository::sortAirports(int mode, bool ascending) const {
+    vector<Aiport> copy = aiports;
+    auto cmpName = [&](const Aiport& a, const Aiport& b) {
+        return ascending ? a.getName() < b.getName() : a.getName() > b.getName();
+        };
+    auto cmpCountry = [&](const Aiport& a, const Aiport& b) {
+        return ascending ? a.getIsoCountry() < b.getIsoCountry() : a.getIsoCountry() > b.getIsoCountry();
+        };
+    auto cmpType = [&](const Aiport& a, const Aiport& b) {
+        return ascending ? a.getType() < b.getType() : a.getType() > b.getType();
+        };
+    auto cmpLatLon = [&](const Aiport& a, const Aiport& b) {
+        if (a.getCoordinatesX() != b.getCoordinatesX())
+            return ascending ? a.getCoordinatesX() < b.getCoordinatesX() : a.getCoordinatesX() > b.getCoordinatesX();
+        return ascending ? a.getCoordinatesY() < b.getCoordinatesY() : a.getCoordinatesY() > b.getCoordinatesY();
+        };
+    auto cmpElevation = [&](const Aiport& a, const Aiport& b) {
+        return ascending ? a.getElevationFt() < b.getElevationFt() : a.getElevationFt() > b.getElevationFt();
+        };
+
+    switch (mode) {
+    case 1: std::sort(copy.begin(), copy.end(), cmpName); break;
+    case 2: std::sort(copy.begin(), copy.end(), cmpCountry); break;
+    case 3: std::sort(copy.begin(), copy.end(), cmpType); break;
+    case 4: std::sort(copy.begin(), copy.end(), cmpLatLon); break;
+    case 5: std::sort(copy.begin(), copy.end(), cmpElevation); break;
+    default: break;
+    }
+    return copy;
+}
 
 
