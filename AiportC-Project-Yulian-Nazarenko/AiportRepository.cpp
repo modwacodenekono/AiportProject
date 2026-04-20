@@ -22,9 +22,11 @@ static double haversine(double lat1, double lon1, double lat2, double lon2) {
 
 
 
+//----------Aiport class methods----------
 
 Aiport::Aiport(){}
 
+// Set function which creates an instance of a class based on input values
 void Aiport::set(string id, string t, string n, int el, string c, string isoC, string isoR, string m, string icao, string iata, string gps, string local, double X, double Y)
 {
     aiportId = id;
@@ -43,7 +45,7 @@ void Aiport::set(string id, string t, string n, int el, string c, string isoC, s
 	coordinatesY = Y;
 }
 
-
+// Getter functions
 string Aiport::getId() const { return aiportId; }
 string Aiport::getType() const { return type; }
 string Aiport::getName() const { return name; }
@@ -59,7 +61,7 @@ string Aiport::getLocalCode() const { return localCode; }
 double Aiport::getCoordinatesX() const { return coordinatesX; }
 double Aiport::getCoordinatesY() const { return coordinatesY; }
 
-
+// Display function
 void Aiport::print() const {
     cout << "-----------------------------\n";
     cout << "Airport ID: " << aiportId << "\n";
@@ -74,6 +76,10 @@ void Aiport::print() const {
     cout << "Coordinates: " << coordinatesX << " , " << coordinatesY << "\n";
 }
 
+
+//----------Aiport Repository class methods----------
+
+// Load function checks if the file is open skips the first line and stores every single line as Aiport class in aiports vector
 void AiportRepository::loadFromCsv() {
     ifstream file("airports.csv");
     string line;
@@ -83,6 +89,7 @@ void AiportRepository::loadFromCsv() {
         return;
     }
 
+    cout << "Loading...\n";
     getline(file, line);
 
     while (getline(file, line)) {
@@ -90,7 +97,7 @@ void AiportRepository::loadFromCsv() {
         string temp;
 
         Aiport a;
-        int elevation = 0;
+        int elevation = 0; // In case it's empty space
         double coordinatesX, coordinatesY; 
         string id, type, name, continent, isoCountry, isoRegion, municipality, icaoCode, iataCode, gpsCode, localCode;
 
@@ -112,7 +119,7 @@ void AiportRepository::loadFromCsv() {
             getline(ss, localCode, ',');
             getline(ss, temp, ','); coordinatesX = stod(temp);
             getline(ss, temp, ',');
-            if (!temp.empty() && temp.back() == '\r') {
+            if (!temp.empty() && temp.back() == '\r') {  // Checks if coordinate is existing and there are no external signs and converts it to double
                 temp.pop_back();
             }
             coordinatesY = stod(temp);
@@ -128,7 +135,7 @@ void AiportRepository::loadFromCsv() {
 
 
 
-// Find airport by id
+// Find airport by id. Used for other functions therefore Aiport class is returned
 const Aiport* AiportRepository::findAirportById(const string& key) const {
     for (const Aiport& a : aiports) {
         if (a.getId() == key) return &a;
@@ -136,6 +143,8 @@ const Aiport* AiportRepository::findAirportById(const string& key) const {
     return nullptr;
 }
 
+
+// Search functions which go through aiports vector compare user input to existing aiports and return a vector of matching aiports
 
 vector<Aiport> AiportRepository::searchByIsoCountry(const string& text) const {
     vector<Aiport> result;
@@ -145,7 +154,7 @@ vector<Aiport> AiportRepository::searchByIsoCountry(const string& text) const {
         }
     }
     return result;
-} // simplify these 3 search functions by using a lambda and a common search function?
+} // simplify these 3 search functions by using a lambda and a common search function? (for future)
 
 
 vector<Aiport> AiportRepository::searchByName(const string& text) const {
@@ -169,6 +178,8 @@ vector<Aiport> AiportRepository::searchByIataCode(const string& text) const {
     return result;
 }
 
+
+// Map is used where key is type of aiport and value is number of them. If there is no aiport type matching in map new created but if there is one count is increased by one
 map<string, int> AiportRepository::countAirportsByType() const {
     map<string, int> aiportTypes;
     for (const Aiport& a : aiports) {
@@ -177,6 +188,8 @@ map<string, int> AiportRepository::countAirportsByType() const {
     return aiportTypes;
 }
 
+
+// Add aiport reseives user input, sets new aiport and adds it to aiports vector
 void AiportRepository::addAirport(const string& id, const string& type, const string& name, int elevation, const string& continent, const string& isoCountry, const string& isoRegion, const string& municipality, const string& icaoCode, const string& iataCode, const string& gpsCode, const string& localCode, double x, double y) {
     Aiport a;
     a.set(id, type, name, elevation, continent, isoCountry, isoRegion, municipality, icaoCode, iataCode, gpsCode, localCode, x, y);
@@ -184,7 +197,7 @@ void AiportRepository::addAirport(const string& id, const string& type, const st
 	a.print();
 }
 
-
+// Save function which creates header saves everything from aiport vector to csv therefore overriting it so new aiports can be added
 void AiportRepository::saveToCsv() const {
     ofstream file("airports.csv");
     if (!file.is_open()) {
@@ -216,8 +229,11 @@ void AiportRepository::saveToCsv() const {
 
 
 
-//advanced features
+//----------Advanced features----------
 
+
+
+// Calculate great-circle distance (km) between two airports identified by id. Using haversine function to calculate the distance. Returns negative value if one of the airports is not found
 double AiportRepository::distanceBetweenAirports(const string& a1, const string& a2) const {
     const Aiport* A = findAirportById(a1);
     const Aiport* B = findAirportById(a2);
@@ -225,7 +241,8 @@ double AiportRepository::distanceBetweenAirports(const string& a1, const string&
     return haversine(A->getCoordinatesX(), A->getCoordinatesY(), B->getCoordinatesX(), B->getCoordinatesY());
 }
 
-std::pair<const Aiport*, double> AiportRepository::findNearestAirport(const string& id) const {
+// Find nearest airport to given id. Returns pair {pointer, distance_km} or {nullptr, -1.0}
+std::pair<const Aiport*, double> AiportRepository::findNearestAirport(const string& id) const { // Pair allows to return two instances
     const Aiport* A = findAirportById(id);
     if (!A) return {nullptr, -1.0};
     const Aiport* best = nullptr;
@@ -241,6 +258,7 @@ std::pair<const Aiport*, double> AiportRepository::findNearestAirport(const stri
     return {best, bestDist};
 }
 
+// Return all airports within radiusKm kilometers of airport identified by id. 
 vector<Aiport> AiportRepository::airportsWithinRadius(const string& id, double radiusKm) const {
     vector<Aiport> result;
     const Aiport* center = findAirportById(id);
@@ -253,6 +271,7 @@ vector<Aiport> AiportRepository::airportsWithinRadius(const string& id, double r
     return result;
 }
 
+// Return airport with highest elevation
 const Aiport* AiportRepository::findHighestElevation() const {
     if (aiports.empty()) return nullptr;
     const Aiport* best = &aiports.front();
@@ -262,6 +281,7 @@ const Aiport* AiportRepository::findHighestElevation() const {
     return best;
 }
 
+// Return airport with lowest elevation
 const Aiport* AiportRepository::findLowestElevation() const {
     if (aiports.empty()) return nullptr;
     const Aiport* best = &aiports.front();
@@ -269,8 +289,11 @@ const Aiport* AiportRepository::findLowestElevation() const {
         if (a.getElevationFt() < best->getElevationFt()) best = &a;
     }
     return best;
-} // combine
+} // combine (improvement later)
 
+
+
+// Return airports that have missing/empty IATA codes
 vector<Aiport> AiportRepository::airportsWithMissingIata() const {
     vector<Aiport> result;
     for (const auto& a : aiports) {
@@ -279,6 +302,9 @@ vector<Aiport> AiportRepository::airportsWithMissingIata() const {
     return result;
 }
 
+
+
+// Group airports by municipality
 map<string, vector<Aiport>> AiportRepository::groupByMunicipality() const {
     map<string, vector<Aiport>> groups;
     for (const auto& a : aiports) {
@@ -288,6 +314,8 @@ map<string, vector<Aiport>> AiportRepository::groupByMunicipality() const {
 }
 
 
+
+// Sort airports by a given mode. mode: 1=name, 2=country, 3=type, 4=latitude/longitude, 5=elevation
 vector<Aiport> AiportRepository::sortAirports(int mode, bool ascending) const {
     vector<Aiport> copy = aiports;
     auto cmpName = [&](const Aiport& a, const Aiport& b) {

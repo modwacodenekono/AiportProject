@@ -2,44 +2,41 @@
 #include "Aiport.h"
 #include <vector>
 #include <map>
-#include <set>
 #include <utility>
-
 using namespace std;
 
-
+// Aiport repository class which works as a logic class
 class AiportRepository {
 private:
+    // Vector which stores all aiports
     vector<Aiport> aiports;
 
 public:
+    // Methods to work with csv
     void loadFromCsv();
+    void saveToCsv() const;
 
+    // Search methods
+    const Aiport* findAirportById(const string& key) const;
     vector<Aiport> searchByIsoCountry(const string& text) const;
     vector<Aiport> searchByName(const string& text) const;
     vector<Aiport> searchByIataCode(const string& text) const;
+
     map<string, int> countAirportsByType() const;
+
     void addAirport(const string& id, const string& type, const string& name, int elevation, const string& continent, const string& isoCountry, const string& isoRegion, const string& municipality, const string& icaoCode, const string& iataCode, const string& gpsCode, const string& localCode, double x, double y);
-    void saveToCsv() const;
 
-    const Aiport* findAirportById(const string& key) const;
-
-    // Calculate great-circle distance (km) between two airports identified by id
-    // Returns negative value if one of the airports is not found
+    // Distance calculation methods
     double distanceBetweenAirports(const string& a1, const string& a2) const;
-    // Find nearest airport to given id. Returns pair {pointer, distance_km} or {nullptr, -1.0}
     std::pair<const Aiport*, double> findNearestAirport(const string& id) const;
-    // Return all airports within radiusKm kilometers of airport identified by id
     vector<Aiport> airportsWithinRadius(const string& id, double radiusKm) const;
-    // Return airport with highest elevation (nullptr if none)
+
+    // Elevation calculation methods
     const Aiport* findHighestElevation() const;
-    // Return airport with lowest elevation (nullptr if none)
     const Aiport* findLowestElevation() const;
-    // Return airports that have missing/empty IATA codes
+
+    // Data analythis and sorting
     vector<Aiport> airportsWithMissingIata() const;
-    // Group airports by municipality
     map<string, vector<Aiport>> groupByMunicipality() const;
-    // Sort airports by a given mode. mode: 1=name, 2=country, 3=type, 4=latitude/longitude, 5=elevation
-    // ascending: true for ascending, false for descending
     vector<Aiport> sortAirports(int mode, bool ascending = true) const;
 };

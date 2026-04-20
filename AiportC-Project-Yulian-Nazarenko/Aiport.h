@@ -2,6 +2,7 @@
 #include <string>
 using namespace std;
 
+//Aiport class used to store and return values. It follows incapsulation and other OOP principles
 class Aiport {
 private:
     string aiportId;
@@ -16,12 +17,13 @@ private:
     string iataCode;
     string gpsCode;
     string localCode;
-    double coordinatesX; // single coordinate field (stored as string)
-    double coordinatesY; // single coordinate field (stored as string)
+    double coordinatesX; 
+    double coordinatesY; 
 
 public:
 	Aiport();
 
+    // Set function to make one instance of a class
     void set(string id, string t, string n, int el, string c, string isoC, string isoR, string m, string icao, string iata, string gps, string local, double X, double Y);
 
     string getId() const;
@@ -39,5 +41,6 @@ public:
     double getCoordinatesX() const;
     double getCoordinatesY() const;
 
+    // Display all information about one single aiport
     void print() const;
 };

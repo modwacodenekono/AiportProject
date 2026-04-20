@@ -9,6 +9,7 @@ void AiportApp::run() {
 	repo.loadFromCsv();
 	int choice;
 
+    // Main interface
     do {
         cout << "\n====== Nottingham SkyRoute Explorer ======\n";
         cout << "1. Search airports by country\n";
@@ -20,16 +21,15 @@ void AiportApp::run() {
         cout << "7. Advanced options (radius search, nearest airport, high/low elevation, etc.)\n";
         cout << "8. Exit\n";
         cout << "Choice: ";
-        /*cin >> choice;
-        cin.ignore();*/
 
-        while (!(cin >> choice)) { // Keep asking until the user enters a valid number
+        while (!(cin >> choice)) { // Validation
             cout << "Invalid input. Try again: ";
             cin.clear(); // Reset input errors
             cin.ignore(10000, '\n'); // Remove bad input
         }
 
         switch (choice) {
+            // Gets an input and sends it to repo
             case 1: {
                 string text;
                 cout << "Country search: ";
@@ -90,7 +90,7 @@ void AiportApp::run() {
                     cout << "No airports loaded.\n";
                 } else {
                     cout << "Airport counts by type:\n";
-                    for (const auto& p : counts) {
+                    for (const auto& p : counts) { // Goes through all keys to display them
                         cout << p.first << " -> " << p.second << "\n";
                     }
                 }
@@ -112,7 +112,7 @@ void AiportApp::run() {
                     cout << "Enter elevation (ft): ";
                     getline(cin, temp);
                     if (!temp.empty()) {
-                        try { elevation = stoi(temp); } catch(...) { elevation = 0; }
+                        try { elevation = stoi(temp); } catch(...) { elevation = 0; } // Validation which doesnt allow to enter anything exept for a number
                     }
                     cout << "Enter continent: "; getline(cin, continent);
                     cout << "Enter ISO country: "; getline(cin, isoCountry);
@@ -139,6 +139,7 @@ void AiportApp::run() {
             }
             case 7: {
                 {
+                    // Extra features selector
                     int sub;
                     do {
                         cout << "\n--- Advanced options ---\n";
@@ -221,6 +222,7 @@ void AiportApp::run() {
                         }
                         case 7: {
                             {
+                                // Sorting selector
                                 cout << "Sort by:\n";
                                 cout << "1. Name\n2. Country\n3. Type\n4. Latitude/Longitude\n5. Elevation\n";
                                 cout << "Choose sort field (1-5): ";
